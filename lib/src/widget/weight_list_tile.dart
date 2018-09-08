@@ -65,7 +65,7 @@ class WeightListTile extends StatelessWidget {
   Widget buildDiff() {
     return Expanded(
       child: Text(
-        weightDiff.toString(),
+        weightDiff.toStringAsPrecision(3),
         textScaleFactor: 1.6,
         textAlign: TextAlign.right,
         style: TextStyle(

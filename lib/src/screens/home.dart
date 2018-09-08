@@ -1,7 +1,9 @@
+import 'dart:async';
 import 'dart:math';
 import 'package:flutter/material.dart';
 import '../widget/weight_list_tile.dart';
 import '../models/weight_save_model.dart';
+import 'add_entry_dialog.dart';
 
 class Home extends StatefulWidget {
   @override
@@ -20,7 +22,7 @@ class _HomeState extends State<Home> {
       ),
       body: buildBody(),
       floatingActionButton: FloatingActionButton(
-        onPressed: addWeights,
+        onPressed: _openEntryDialog,
         child: Icon(Icons.add),
         tooltip: "Add Weight",
       ),
@@ -42,10 +44,26 @@ class _HomeState extends State<Home> {
     );
   }
 
-  void addWeights() {
+  void addWeights(WeightSave weightSave) {
     setState(() {
-      list.add(WeightSave(dateTime: DateTime.now(), weight: Random().nextInt(100).toDouble()));
+      list.add(weightSave);
     });
+  }
+
+  Future _openEntryDialog()async {
+    WeightSave weightSave = await Navigator.of(context).push(
+        MaterialPageRoute<WeightSave>(
+          builder: (BuildContext context){
+            return AddEntryDialog();
+          },
+          fullscreenDialog: true
+      )
+    );
+
+    if(weightSave != null)
+      {
+        addWeights(weightSave);
+      }
   }
 }
 
