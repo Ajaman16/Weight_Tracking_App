@@ -14,6 +14,15 @@ class _AddEntryDialogState extends State<AddEntryDialog> {
 
   DateTime _dateTime;
   double _weight = 60.0;
+  TextEditingController _textController;
+  String _notes = "";
+
+
+  @override
+  void initState() {
+    super.initState();
+    _textController = TextEditingController();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -48,9 +57,11 @@ class _AddEntryDialogState extends State<AddEntryDialog> {
     return Column(
       children: <Widget>[
         buildDateNtimePicker(),
-        Divider(),
+        Divider(height: 0.0,),
         buildWeightPicker(),
-        Divider(),
+        Divider(height: 0.0,),
+        buildNoteBox(),
+        Divider(height: 0.0,),
       ],
     );
 
@@ -96,5 +107,21 @@ class _AddEntryDialogState extends State<AddEntryDialog> {
           });
         }
     });
+  }
+
+  Widget buildNoteBox() {
+    return ListTile(
+      leading: Icon(Icons.speaker_notes, color: Colors.grey[500]),
+      title: TextField(
+        controller: _textController,
+        decoration: InputDecoration(
+          hintText: "Optional note"
+        ),
+        onChanged: (value){
+          _notes = value;
+          print(_notes);
+        },
+      ),
+    );
   }
 }
