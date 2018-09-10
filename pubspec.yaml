@@ -22,6 +22,8 @@ dependencies:
   intl: ^0.15.7
   font_awesome_flutter: ^8.0.1
   numberpicker: ^0.1.7
+  firebase_core: 0.2.5
+  firebase_database: ^1.0.4
 
 dev_dependencies:
   flutter_test:

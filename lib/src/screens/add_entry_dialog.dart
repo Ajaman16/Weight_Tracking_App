@@ -6,8 +6,13 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:numberpicker/numberpicker.dart';
 
 class AddEntryDialog extends StatefulWidget {
+
+  final WeightSave weightSave;
+
+  AddEntryDialog({this.weightSave});
+
   @override
-  _AddEntryDialogState createState() => _AddEntryDialogState();
+  _AddEntryDialogState createState() => _AddEntryDialogState(weightSave: weightSave);
 }
 
 class _AddEntryDialogState extends State<AddEntryDialog> {
@@ -17,11 +22,22 @@ class _AddEntryDialogState extends State<AddEntryDialog> {
   TextEditingController _textController;
   String _notes = "";
 
+  WeightSave weightSave;
+
+  _AddEntryDialogState({this.weightSave}){
+    if(weightSave != null)
+      {
+        _dateTime = weightSave.dateTime;
+        _notes = weightSave.note;
+        _weight = weightSave.weight;
+      }
+  }
+
 
   @override
   void initState() {
     super.initState();
-    _textController = TextEditingController();
+    _textController = TextEditingController(text: _notes);
   }
 
   @override
@@ -32,10 +48,22 @@ class _AddEntryDialogState extends State<AddEntryDialog> {
         actions: <Widget>[
           FlatButton(
               onPressed: (){
-                Navigator.of(context).pop(WeightSave(
-                    weight: _weight,
-                    dateTime: _dateTime == null ? DateTime.now() : _dateTime
-                ));
+
+                if(weightSave == null)
+                  {
+                    weightSave = WeightSave(
+                      weight: _weight,
+                      dateTime: _dateTime == null ? DateTime.now() : _dateTime,
+                      note: _notes,
+                    );
+                  } else{
+
+                  weightSave.weight = _weight;
+                  weightSave.dateTime = _dateTime == null ? DateTime.now() : _dateTime;
+                  weightSave.note = _notes;
+                }
+
+                Navigator.of(context).pop(weightSave);
               },
               child: Text(
                 "SAVE",
