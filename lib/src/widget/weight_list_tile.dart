@@ -40,7 +40,7 @@ class WeightListTile extends StatelessWidget {
             textAlign: TextAlign.left,
           ),
           Text(
-            new DateFormat.EEEE().format(weightSave.dateTime),
+            new DateFormat.jm().format(weightSave.dateTime),
             textScaleFactor: 0.8,
             textAlign: TextAlign.right,
             style: TextStyle(
